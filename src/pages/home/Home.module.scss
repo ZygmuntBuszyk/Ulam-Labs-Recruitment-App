@@ -1,0 +1,27 @@
+@import 'assets/variables.scss';
+@import 'assets/colors.scss';
+
+.home {
+  max-width: $screen-xl-min;
+  width: $screen-md-min;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  .home-container {
+    margin-top: 2em;
+    width: 100%;
+
+    &__select {
+      display: flex;
+      justify-content: center;
+    }
+
+    &__row-panel {
+      display: flex;
+      justify-content: flex-start;
+      margin-top: 3em;
+    }
+  }
+}

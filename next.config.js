@@ -1,7 +1,17 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
-  swcMinify: true,
-}
+const withPlugins = require('next-compose-plugins');
+const withImages = require('next-images');
 
-module.exports = nextConfig
+module.exports = withPlugins([withImages], {
+	async redirects() {
+		return [
+			{
+				source: '/home',
+				destination: '/',
+				permanent: true
+			}
+		];
+	},
+	env: {
+		NEXT_PUBLIC_API_URL: process.env.NEXT_COINGECKO_API_URL
+	}
+});

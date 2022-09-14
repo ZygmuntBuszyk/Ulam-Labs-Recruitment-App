@@ -1,0 +1,31 @@
+@import 'assets/colors.scss';
+
+.select {
+  border-radius: 0.8rem !important;
+  max-width: 35rem;
+  width: 100%;
+
+  &--light-theme div {
+    background: $color-white !important;
+  }
+
+  &--read-only {
+    pointer-events: none !important;
+
+    .icon {
+      fill: $color-grey;
+    }
+  }
+
+  &--active .icon {
+    fill: $color-blue !important;
+    transform: rotate(180deg);
+  }
+}
+
+.icon {
+  fill: $color-dark;
+  width: 0.966rem;
+  height: 0.646rem;
+  margin-bottom: 0.2rem;
+}
