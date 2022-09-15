@@ -19,7 +19,7 @@ function Home() {
 			<div className={styles['home-container']}>
 				<div className={styles['home-container__select']}>
 					<MultiSelect
-						placeholder={'Choose cryptocurrency'}
+						placeholder={'Enter your cryptocurrency..'}
 						onSearch={value => dispatch(appOperations.searchCoins(value))}
 						data={coinsData}
 						onSelect={(_, { label, value }) => {

@@ -1,4 +1,4 @@
-## Ulam Labs Recruitment Task
+# Ulam Labs Recruitment Task
 
 Task
 Build a single page application that shows the price of a user selected cryptocurrencies.
@@ -24,3 +24,6 @@ Build a single page application that shows the price of a user selected cryptocu
 3. extensive testing, E2E testing are welcomed
 4. UX and aesthetics of the solution
 
+
+## START DEV SERVER
+npm run dev
