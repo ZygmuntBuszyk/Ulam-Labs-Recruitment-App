@@ -27,3 +27,6 @@ Build a single page application that shows the price of a user selected cryptocu
 
 ## START DEV SERVER
 npm run dev
+
+## HOSTED ON NETLIFY
+https://comfy-pony-4bf413.netlify.app/
