@@ -1,15 +1,14 @@
-import { Select as AntSelect, Tag as AntTag } from 'antd';
+import { Select as AntSelect } from 'antd';
 import styles from './MultiSelect.module.scss';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import cx from 'classnames';
 import { debounce } from 'lodash';
 import { IChosenCoin, ICoinData } from '../../services/api/apiModels';
-import type { CustomTagProps } from 'rc-select/lib/BaseSelect';
+import SelectTag from './SelectTag';
 
 export interface IMultiSelect {
 	placeholder?: string;
 	data: ICoinData[];
-	onChange?: () => void;
 	onSearch?: (searchValue: string) => void;
 	onSelect?: (_, data: { label: string; value: string }) => void;
 	onDeselect?: (value: string) => void;
@@ -17,34 +16,24 @@ export interface IMultiSelect {
 	defaultValue: string[];
 }
 
-function MultiSelect({ placeholder, data, onChange, onSearch, onSelect, onDeselect, selectedData }: IMultiSelect): React.ReactElement {
+function MultiSelect({ placeholder, data, onSearch, onSelect, onDeselect, selectedData }: IMultiSelect): React.ReactElement {
 	const [isFocused, setIsFocused] = useState<boolean>(false);
+	const debounceTime = 500;
 
-	const tagRender = (props: CustomTagProps) => {
-		const { label, value, closable, onClose } = props;
-		const color = selectedData.find(data => data.Id === value).Color;
-		const onPreventMouseDown = (event: React.MouseEvent<HTMLSpanElement>) => {
-			event.preventDefault();
-			event.stopPropagation();
-		};
-
-		return (
-			<AntTag color={color} onMouseDown={onPreventMouseDown} closable={closable} onClose={onClose} style={{ marginRight: 3 }}>
-				{label}
-			</AntTag>
-		);
-	};
+	const debounceSearch = useCallback(
+		debounce(async (value: string) => onSearch(value), debounceTime),
+		[]
+	);
 
 	return (
 		<AntSelect
 			mode='multiple'
 			placeholder={placeholder}
 			value={selectedData.map(coin => coin.Id)}
-			onChange={onChange}
 			onSelect={onSelect}
 			onDeselect={onDeselect}
-			tagRender={tagRender}
-			onSearch={value => debounce(onSearch, 500)(value)} // todo make it work
+			tagRender={props => <SelectTag {...{ ...props, selectedData: selectedData }} />}
+			onSearch={debounceSearch}
 			options={data?.map(option => ({
 				value: option?.Id,
 				label: option?.Name,

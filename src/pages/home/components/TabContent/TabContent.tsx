@@ -1,9 +1,10 @@
 import styles from './TabContent.module.scss';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { appOperations, appSelectors } from 'state/ducks/app';
 import { useDispatch, useSelector } from 'react-redux';
 import { IChosenCoin } from '../../../../services/api/apiModels';
 import { Line } from '@ant-design/plots';
+import { formatCurrency } from '@coingecko/cryptoformat';
 import dayjs from 'dayjs';
 
 interface ITabContentPanelProps {
@@ -13,7 +14,7 @@ interface ITabContentPanelProps {
 function TabContent({ coin }: ITabContentPanelProps) {
 	const dispatch = useDispatch();
 	const prices = useSelector(appSelectors.getMarketData(coin.Id));
-	const currentPrice = useMemo(() => prices?.length && prices[prices?.length - 1][1], [prices]);
+	const currentPrice = useMemo(() => prices?.length && formatCurrency(prices[prices?.length - 1][1], 'USD', 'en'), [prices]);
 
 	const [data, setData] = useState([]);
 
@@ -40,7 +41,7 @@ function TabContent({ coin }: ITabContentPanelProps) {
 		);
 	}, [coin]);
 
-	const getYAxisConfig = () => {
+	const getYAxisMinMaxConfig = useCallback(() => {
 		const mappedData = [...prices].map(([date, price]) => price);
 
 		const min = mappedData.reduce(function (p, v) {
@@ -54,7 +55,7 @@ function TabContent({ coin }: ITabContentPanelProps) {
 			max,
 			min
 		};
-	};
+	}, [prices]);
 
 	return (
 		<div className={styles.TabContent}>
@@ -75,7 +76,7 @@ function TabContent({ coin }: ITabContentPanelProps) {
 						},
 						yAxis: {
 							nice: true,
-							...getYAxisConfig()
+							...getYAxisMinMaxConfig()
 						},
 						width: '100%',
 						color: coin.Color
