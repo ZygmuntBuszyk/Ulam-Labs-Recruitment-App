@@ -27,6 +27,8 @@ function MultiSelect({ placeholder, data, onSearch, onSelect, onDeselect, select
 
 	return (
 		<AntSelect
+			id='multiSelect'
+			data-cy='multiSelect'
 			mode='multiple'
 			placeholder={placeholder}
 			value={selectedData.map(coin => coin.Id)}
