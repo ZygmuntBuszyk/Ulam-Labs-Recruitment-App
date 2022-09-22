@@ -1,3 +1,4 @@
+import styles from './Tabs.module.scss';
 import { Tabs } from 'antd';
 import { useCallback, useMemo } from 'react';
 import { appOperations, appSelectors } from 'state/ducks/app';
@@ -42,6 +43,7 @@ function TabsPanel({ chosenCoins }: ITabsPanelProps) {
 	return (
 		<Tabs
 			hideAdd
+			className={styles.Tabs}
 			onChange={Id => dispatch(appOperations.setActiveTab(Id))}
 			activeKey={activeTab || chosenCoins[0]?.Id}
 			type='editable-card'
